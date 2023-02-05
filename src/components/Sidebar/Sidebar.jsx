@@ -79,7 +79,6 @@ const Sidebar = ({ setMobileOpen }) => {
                 <ListItemIcon>
                   <img
                     src={genreIcons[name.toLowerCase()]}
-                    alt=""
                     className={classes.genreImages}
                     height={20}
                   />
