@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   CircularProgress,
@@ -7,9 +7,8 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import { useGetMoviesQuery } from '../../services/TMDB';
-import { MovieList, Pagination } from '..';
+import { MovieList, Pagination, FeaturedMovie } from '..';
 
 const Movies = () => {
   const [page, setPage] = useState(1);
@@ -22,8 +21,9 @@ const Movies = () => {
     searchQuery,
   });
   const lg = useMediaQuery((theme) => theme.breakpoints.only('lg'));
+  const numberOfMovies = lg ? 17 : 19;
 
-  const numberOfMovies = lg ? 16 : 18;
+  // console.log(genreIdOrCategoryName);
 
   if (isFetching) {
     return (
@@ -35,21 +35,22 @@ const Movies = () => {
 
   if (!data.results.length) {
     return (
-      <Box display="flex" alignItems="center" mt="20px">
+      <Box display="flex" alignItem="center" mt="20px">
         <Typography variant="h4">
-          No movies that match that name.
+          No movies that match the name.
           <br />
-          Please search for something else
+          Please search for something else.
         </Typography>
       </Box>
     );
   }
 
-  if (error) return 'An error has occurred';
+  if (error) return 'An error has occured.';
 
   return (
     <div>
-      <MovieList movies={data} numberOfMovies={numberOfMovies} />
+      <FeaturedMovie movie={data.results[0]} />
+      <MovieList movies={data} numberOfMovies={numberOfMovies} excludeFirst />
       <Pagination
         currentPage={page}
         setPage={setPage}

@@ -24,7 +24,6 @@ export default makeStyles((theme) => ({
       transform: 'scale(1.05)',
     },
   },
-
   title: {
     color: theme.palette.text.primary,
     textOverflow: 'ellipsis',
@@ -32,7 +31,7 @@ export default makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     marginTop: '10px',
-    marginBottom: '0',
+    marginBottom: 0,
     textAlign: 'center',
   },
 }));

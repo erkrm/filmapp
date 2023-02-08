@@ -14,10 +14,15 @@ export default makeStyles((theme) => ({
     borderRadius: '20px',
     boxShadow: '0.5em 1em 1em rgb(64, 64, 70)',
     width: '80%',
+    [theme.breakpoints.between('lg', 'xl')]: {
+      margin: '0 auto',
+      width: '85%',
+      height: '70%',
+    },
     [theme.breakpoints.down('md')]: {
       margin: '0 auto',
       width: '50%',
-      //height: '350px',
+      // height: '550px',
     },
     [theme.breakpoints.down('sm')]: {
       margin: '0 auto',
@@ -26,7 +31,7 @@ export default makeStyles((theme) => ({
       marginBottom: '30px',
     },
   },
-  genresContainer: {
+  genreContainer: {
     margin: '10px 0 !important',
     display: 'flex',
     justifyContent: 'space-around',
@@ -48,7 +53,7 @@ export default makeStyles((theme) => ({
   castImage: {
     width: '100%',
     maxWidth: '7em',
-    height: '8em',
+    hight: '8em',
     objectFit: 'cover',
     borderRadius: '10px',
   },

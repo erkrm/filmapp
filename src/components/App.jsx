@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import useAlan from './Alan';
 
 import useStyles from './styles';
+import { Actors, MovieInformation, Movies, NavBar, Profile } from '.';
 
-import { Actors, MovieInformation, Movies, NavBar, Profile } from './';
-
-// arrow function for named component
 const App = () => {
   const classes = useStyles();
+  const alanBtnContainer = useRef();
+
+  useAlan();
 
   return (
     <div className={classes.root}>
@@ -16,14 +18,22 @@ const App = () => {
       <NavBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Routes>
-          <Route path="/" element={<Movies />} />
-          <Route path="/approved" element={<Movies />} />
-          <Route path="/movie/:id" element={<MovieInformation />} />
-          <Route path="/actors/:id" element={<Actors />} />
-          <Route path="/profile/:id" element={<Profile />} />
-        </Routes>
+        <Switch>
+          <Route exact path={['/', '/approved']}>
+            <Movies />
+          </Route>
+          <Route exact path="/movie/:id">
+            <MovieInformation />
+          </Route>
+          <Route exact path="/actor/:id">
+            <Actors />
+          </Route>
+          <Route exact path="/profile/:id">
+            <Profile />
+          </Route>
+        </Switch>
       </main>
+      <div ref={alanBtnContainer} />
     </div>
   );
 };

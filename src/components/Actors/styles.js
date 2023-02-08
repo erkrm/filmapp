@@ -5,6 +5,6 @@ export default makeStyles((theme) => ({
     maxWidth: '90%',
     borderRadius: '20px',
     objectFit: 'cover',
-    boxShadow: '0.5em 0.5em 1em',
+    boxShadow: '0.5em 0.5em 1em rgb(64, 64, 70)',
   },
 }));

@@ -3,7 +3,7 @@ import { Typography, Button } from '@mui/material';
 
 import useStyles from './styles';
 
-const Pagination = ({ currentPage, totalPages, setPage }) => {
+const Pagination = ({ currentPage, setPage, totalPages }) => {
   const classes = useStyles();
 
   const handlePrev = () => {
@@ -11,9 +11,10 @@ const Pagination = ({ currentPage, totalPages, setPage }) => {
       setPage((prevPage) => prevPage - 1);
     }
   };
+
   const handleNext = () => {
     if (currentPage !== totalPages) {
-      setPage((nextPage) => nextPage + 1);
+      setPage((prevPage) => prevPage + 1);
     }
   };
 

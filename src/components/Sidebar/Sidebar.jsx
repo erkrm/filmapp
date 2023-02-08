@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect } from 'react';
 import {
   Divider,
@@ -11,12 +12,17 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/styles';
-import { useGetGenresQuery } from '../../services/TMDB';
-import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
+import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres';
+import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
+
+const redLogo =
+  'https://fontmeme.com/permalink/230202/43481cba098f9a36a63dcb79be333b13.png';
+const blueLogo =
+  'https://fontmeme.com/permalink/230202/7f86dfa9175af72e85a6ce7481fc56f9.png';
 
 const categories = [
   { label: 'Popular', value: 'popular' },
@@ -25,25 +31,28 @@ const categories = [
 ];
 
 const Sidebar = ({ setMobileOpen }) => {
+  const theme = useTheme();
+  const classes = useStyles();
+  const { data, error, isFetching } = useGetGenresQuery();
+  const dispatch = useDispatch();
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
-  const theme = useTheme();
-  const classes = useStyles();
-  const { data, isFetching } = useGetGenresQuery();
-  const dispatch = useDispatch();
-  const redLogo =
-    'https://fontmeme.com/permalink/230202/43481cba098f9a36a63dcb79be333b13.png';
-  const blueLogo =
-    'https://fontmeme.com/permalink/230202/7f86dfa9175af72e85a6ce7481fc56f9.png';
+  // console.log(genreIdOrCategoryName);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName, setMobileOpen]);
+
+  if (error) return 'An error has occured.';
 
   return (
     <>
       <Link to="/" className={classes.imageLink}>
         <img
           className={classes.image}
-          src={theme.palette.mode === 'light' ? redLogo : blueLogo}
-          alt="filmapp logo"
+          src={theme.palette.mode === 'light' ? blueLogo : redLogo}
+          alt="Filmapp"
         />
       </Link>
       <Divider />
@@ -51,13 +60,16 @@ const Sidebar = ({ setMobileOpen }) => {
         <ListSubheader>Categories</ListSubheader>
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => dispatch(selectGenreOrCategory(value))}>
+            <ListItem
+              onClick={() => dispatch(selectGenreOrCategory(value))}
+              button
+            >
               <ListItemIcon>
                 <img
                   src={genreIcons[label.toLowerCase()]}
-                  alt=""
-                  className={classes.genreImages}
-                  height={20}
+                  className={classes.genreImage}
+                  height={30}
+                  alt="categories_icons"
                 />
               </ListItemIcon>
               <ListItemText primary={label} />
@@ -75,12 +87,16 @@ const Sidebar = ({ setMobileOpen }) => {
         ) : (
           data.genres.map(({ name, id }) => (
             <Link key={name} className={classes.links} to="/">
-              <ListItem onClick={() => dispatch(selectGenreOrCategory(id))}>
+              <ListItem
+                onClick={() => dispatch(selectGenreOrCategory(id))}
+                button
+              >
                 <ListItemIcon>
                   <img
                     src={genreIcons[name.toLowerCase()]}
-                    className={classes.genreImages}
-                    height={20}
+                    className={classes.genreImage}
+                    height={30}
+                    alt="genres_icons"
                   />
                 </ListItemIcon>
                 <ListItemText primary={name} />
